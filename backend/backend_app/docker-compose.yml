@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  pg_db:
+    image: postgres:15.2-bullseye
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DATABASE: db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  main_app:
+      build: .
+      ports:
+        - 8000:8000
+      depends_on:
+        - pg_db
