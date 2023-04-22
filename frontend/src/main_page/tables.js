@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, FormControl, Button } from 'react-bootstrap';
 
 function UserTable() {
   const [name, setName] = useState('');
@@ -18,6 +18,7 @@ function UserTable() {
       })
       .then(response => {
         console.log("Success");
+        window.location.reload();
       })
       .catch(error => {
         console.log("Something went wrong");
@@ -50,12 +51,14 @@ function UserTable() {
 
 function SalaryForm() {
   const [idValue, setIdValue] = useState('');
+  const [contractValue, setContractValue] = useState('');
   const [salaryValue, setSalaryValue] = useState(0);
-
+  
   const handleSubmit = (event) => {
-    e.preventDefault();
-    let data = JSON.stringify({id:idValue, s});
-    fetch('http://localhost:8000/person/', {
+    event.preventDefault();
+    let data = JSON.stringify({contract:contractValue , salary:salaryValue});
+    let url = "http://localhost:8000/generate_social_security/" + idValue
+    fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -63,36 +66,49 @@ function SalaryForm() {
         body: data
       })
       .then(response => {
-        console.log("Success");
+        window.localtion.reload();
       })
       .catch(error => {
         console.log("Something went wrong");
+        console.log(error);
       });
   };
 
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+  const handleContractChange = (event) => {
+    setContractValue(event.target.value);
+  }
+  
+  const handleIdChange = (event) => {
+    setIdValue(event.target.value);
   };
 
-  const handleAmountChange = (event) => {
-    setAmountValue(event.target.value);
+  const handleSalaryChange = (event) => {
+    setSalaryValue(event.target.value);
   };
+  
 
   return (
     <Form onSubmit={handleSubmit}>
+       <Form.Label htmlFor="bootstrap-field">Contract:</Form.Label>
+      <FormControl
+        type="text"
+        id="bootstrap-field"
+        value={contractValue}
+        onChange={handleContractChange}
+      />
       <Form.Label htmlFor="bootstrap-field">User ID:</Form.Label>
       <FormControl
         type="text"
         id="bootstrap-field"
         value={idValue}
-        onChange={handleInputChange}
+        onChange={handleIdChange}
       />
       <Form.Label htmlFor="bootstrap-amount">Salary:</Form.Label>
       <FormControl
         type="number"
         id="bootstrap-amount"
-        value={amountValue}
-        onChange={handleAmountChange}
+        value={salaryValue}
+        onChange={handleSalaryChange}
       />
       <Button variant="primary" type="submit">
         Submit
@@ -100,4 +116,5 @@ function SalaryForm() {
     </Form>
   );
 }
-export default UserTable;
+
+export { UserTable, SalaryForm};

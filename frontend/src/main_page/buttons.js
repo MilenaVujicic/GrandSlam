@@ -14,11 +14,15 @@ function SellButton(){
     )
 }
 
-function ShowSalary(){
-    
-    
+function ShowUser(){
+    return(
+        <Button onClick={navigateShowUser}>Show User</Button>
+    )
 }
 
+function navigateShowUser(){
+
+}
 function AddUser(){
     const navigate = useNavigate();
 
@@ -39,16 +43,16 @@ function sellRequest(){
     console.log("Sold");
 }
 
-function salaryRequest(){
+function ShowSalary(){
     const navigate = useNavigate();
 
     const handleShowSalary=()=>{
         navigate('/addSalary')
     }
     return(
-        <Button onClick={handleShowSalary}>Add User</Button>
+        <Button onClick={handleShowSalary}>Add Salary</Button>
     );
 }
 
 
-export {BuyButton, SellButton, AddUser}
+export {BuyButton, SellButton, AddUser, ShowUser, ShowSalary}

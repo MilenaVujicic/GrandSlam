@@ -11,24 +11,25 @@ from random import randint
 
 
 @csrf_exempt
-def generate_social_security_data(request):
-    person = Person.objects.get(id=1)
-    value = randint(40000, 1000000)
+def generate_social_security_data(request, id):
+    person = Person.objects.get(id_number=int(id))
     if request.method == "POST":
         all_contracts = SocialSecurity.objects.all()
         if len(all_contracts) != 0:
             return HttpResponse(status=400)
 
+        data = JSONParser().parse(request)
+        value = int(data['salary'])
         contract = {
-            "contract": "The contract for a salary",
+            "contract": data['contract'],
             "s_value": value,
-            "person": "1",
+            "person": person.id
         }
 
         influx = {
             "value": value,
             "type": "salary",
-            "person": "1"
+            "person": person.id
         }
         serializer = SocialSecuritySerializer(data=contract)
         person.balance += value
@@ -43,6 +44,7 @@ def generate_social_security_data(request):
                 return JsonResponse(influx_serializer.errors, status=400)
             return JsonResponse(serializer.data, status=200)
         else:
+            print(serializer.errors)
             return JsonResponse(serializer.errors, status=400)
 
     return HttpResponse(status=200)

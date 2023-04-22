@@ -26,3 +26,14 @@ def get_all_persons(request):
         return JsonResponse(serializer.data, safe=False, status=200)
     
     return HttpResponse(status=400)
+
+@csrf_exempt
+def blacklist_person(request, id):
+    if request.method == "POST":
+        person = Person.objects.get(id=id)
+        person.blacklisted = True
+        serializer = PersonSerializer(data=person)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.errors, status=400)

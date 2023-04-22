@@ -20,7 +20,7 @@ from institutions.views import generate_social_security_data, generate_others, b
 from user.views import create_person, get_all_persons
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("generate_social_security/", generate_social_security_data),
+    path("generate_social_security/<int:id>", generate_social_security_data),
     path("person/", create_person),
     path("persons/",get_all_persons),
     path("building/<str:type>/", building),
