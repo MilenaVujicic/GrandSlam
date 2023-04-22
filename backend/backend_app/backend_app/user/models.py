@@ -6,6 +6,7 @@ EFFLUX_SIZE = (("small", "SMALL"), ("medium", "MEDIUM"), ("large", "LARGE"))
 
 class Person(models.Model):
     name = models.CharField(max_length=255, null=False)
+    blacklisted=models.BooleanField(default=False)
     surname = models.CharField(max_length=255, null=False)
     id_number = models.CharField(max_length=13, unique=True, null=False)
     balance = models.BigIntegerField(default=0)

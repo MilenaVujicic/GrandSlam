@@ -18,4 +18,4 @@ class EffluxSerializer(serializers.ModelSerializer):
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Person
-        fields = ('id', 'name', 'surname')
+        fields = ('id', 'name', 'surname', 'id_number', 'blacklisted')
