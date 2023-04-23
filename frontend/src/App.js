@@ -5,7 +5,7 @@ import MainPage from './main_page/main';
 import {UserTable, SalaryForm, LoanForm, SellForm, BuyForm} from './main_page/tables';
 import { Route, Router, Routes } from 'react-router-dom';
 import { ReactDOM } from 'react';
-import DataTable from './main_page/admin_table';
+import {DataTable, InfluxTable, EffluxTable} from './main_page/admin_table';
 
 function App() {
   return (
@@ -19,7 +19,9 @@ function App() {
       <Route exact path="/loan" element={<LoanForm/>}></Route>
       <Route exact path="/sell" element={<SellForm/>}></Route>
       <Route exact path="/buy" element={<BuyForm/>}></Route>
-  
+      <Route exact path="/influx" element={<InfluxTable/>}></Route>    
+      <Route exact path="/efflux" element={<EffluxTable/>}></Route>    
+
       </Routes>
       </div>
       );

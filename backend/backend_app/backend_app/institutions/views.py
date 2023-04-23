@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from .serializer import SocialSecuritySerializer, LandRegistrySerializer, OthersSerializer
-from user.models import Person, Influx
+from user.models import Person, Influx, Efflux
 from user.serializer import InfluxSerializer, EffluxSerializer, PersonSerializer
 from .models import SocialSecurity, Others, LandRegistry
 from django.views.decorators.csrf import csrf_exempt
+from pyteal import *
 from random import randint
+from algosdk import transaction, v2client, mnemonic
 # Create your views here.
 
 
@@ -61,15 +63,19 @@ def get_a_loan(request, id, value):
             "type": "others",
             "person": person.id
         }
+
+     
+
         serializer = OthersSerializer(data=other)
         person.balance += value
-
+       
         if serializer.is_valid():
             serializer.save()
             person.save()
             influx_serializer = InfluxSerializer(data=influx)
             if influx_serializer.is_valid():
                 influx_serializer.save()
+                
             else:
                 return JsonResponse(influx_serializer.errors, status=400)
 
@@ -174,9 +180,26 @@ def sell(request, id, value):
 
         }
         serializer = InfluxSerializer(data=influx)
+        b_person = Bytes(str(person.id))
+        b_type = Bytes("others")
+        b_value = Bytes(str(value))
+
+        teal_program = Seq(
+            Assert(Gtxn[0].application_args.length() == Int(3)),
+            Assert(Gtxn[0].application_args[0] == b_person),
+            Assert(Gtxn[0].application_args[1] == b_type),
+            Assert(Gtxn[0].application_args[2] == b_value),
+
+            Return(Int(0))
+        )
+        
+        compileTeal(teal_program, mode=Mode.Application)
+        ct = compileTeal(teal_program, mode=Mode.Application)
+        
         if serializer.is_valid():
             serializer.save()
             person.save()
+
             return JsonResponse(serializer.data, status=200)
         return JsonResponse(serializer.errors, status=400)
 
@@ -198,7 +221,25 @@ def buy(request, id, value, buy_type):
             "person":person.id
         }
 
+        b_person = Bytes(str(person.id))
+        b_type = Bytes(buy_type)
+        b_value = Bytes(str(value))
+        b_size = Bytes(str(size))
+        teal_program = Seq(
+            Assert(Gtxn[0].application_args.length() == Int(3)),
+            Assert(Gtxn[0].application_args[0] == b_person),
+            Assert(Gtxn[0].application_args[1] == b_type),
+            Assert(Gtxn[0].application_args[2] == b_value),
+            Assert(Gtxn[0].application_args[3] == b_size),
+
+
+            Return(Int(0))
+        )
+
+        ct = compileTeal(teal_program, mode=Mode.Application)
+     
         serializer = EffluxSerializer(data=efflux)
+        serializer['ct'] = ct
         if serializer.is_valid():
             serializer.save()
             person.save()
@@ -221,3 +262,18 @@ def create_efflux(request):
         return JsonResponse(content=serializer.errors, status=400)
     return HttpResponse(status=404)
 
+
+@csrf_exempt
+def all_influxes(request):
+   if request.method == "GET":
+        influxes = Influx.objects.all()
+        serializer = InfluxSerializer(influxes, many=True)
+        return JsonResponse(serializer.data, safe=False, status=200)
+
+
+@csrf_exempt
+def all_effluxes(request):
+   if request.method == "GET":
+        effluxes = Efflux.objects.all()
+        serializer = EffluxSerializer(effluxes, many=True)
+        return JsonResponse(serializer.data, safe=False, status=200)

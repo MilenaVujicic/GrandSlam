@@ -61,4 +61,82 @@ const DataTable = ({ data }) => {
   );
 };
 
-export default DataTable;
+const InfluxTable = ({ data }) => {
+  const [influxes, setInfluxes] = useState([]);
+
+  useEffect(() => {
+      const fetchData = async () => {
+        const response = await fetch('http://localhost:8000/influx');
+        const json = await response.json();
+        console.log(json);
+        setInfluxes(json);
+      };
+  
+      fetchData();
+    }, []);
+
+return (
+  <Table striped bordered hover>
+    <thead>
+      <tr>
+        <th>Value</th>
+        <th>Type</th>
+        <th>Time</th>
+        <th>Person</th>
+      </tr>
+    </thead>
+    <tbody>
+      {influxes.map((influx) => (
+        <tr key={influx.id}>
+          <td>{influx.value}</td>
+          <td>{influx.type}</td>
+          <td>{influx.time}</td>
+          <td>{influx.person}</td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+);
+};
+
+const EffluxTable = ({ data }) => {
+  const [effluxes, setEFfluxes] = useState([]);
+
+  useEffect(() => {
+      const fetchData = async () => {
+        const response = await fetch('http://localhost:8000/efflux');
+        const json = await response.json();
+        console.log(json);
+        setEFfluxes(json);
+      };
+  
+      fetchData();
+    }, []);
+
+return (
+  <Table striped bordered hover>
+    <thead>
+      <tr>
+        <th>Value</th>
+        <th>Type</th>
+        <th>Time</th>
+        <th>Size</th>
+        <th>Person</th>
+      </tr>
+    </thead>
+    <tbody>
+      {effluxes.map((efflux) => (
+        <tr key={efflux.id}>
+          <td>{efflux.value}</td>
+          <td>{efflux.type}</td>
+          <td>{efflux.time}</td>
+          <td>{efflux.size}</td>
+          <td>{efflux.person}</td>
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+);
+};
+
+export {DataTable, InfluxTable, EffluxTable};

@@ -1,5 +1,5 @@
 import React from "react";
-import {AddUser, BuyButton, SellButton, ShowUser, ShowSalary, GetALoan} from "./buttons";
+import {AddUser, BuyButton, SellButton, ShowUser, ShowSalary, GetALoan, Effluxes, Influxes} from "./buttons";
 function MainPage(){
     return(
         <div>
@@ -17,8 +17,16 @@ function MainPage(){
             <br/>
             <br/>
             <ShowSalary></ShowSalary>
+            <br/>
+            <br/>
             <h2>Test Inspector</h2>
             <ShowUser></ShowUser>
+            <br/>
+            <br/>
+            <Influxes></Influxes>
+            <br/>
+            <br/>
+            <Effluxes></Effluxes>
         </div>
     );
 }

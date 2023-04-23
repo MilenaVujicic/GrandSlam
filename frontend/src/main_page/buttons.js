@@ -25,6 +25,31 @@ function SellButton(){
     )
 }
 
+function Influxes(){
+    const navigate = useNavigate();
+
+    const handleInflux = () => {
+        navigate("/influx")
+    }
+
+    return(
+        <Button onClick={handleInflux}>Influxes</Button>
+    )
+}
+
+function Effluxes(){
+    const navigate = useNavigate();
+
+    const handleEfflux = () => {
+        navigate("/efflux");
+    }
+
+    return(
+        <Button onClick={handleEfflux}>Effluxes</Button>
+    )
+
+}
+
 function GetALoan(){
     const navigate = useNavigate();
 
@@ -75,4 +100,4 @@ function ShowSalary(){
 }
 
 
-export {BuyButton, SellButton, AddUser, ShowUser, ShowSalary, GetALoan}
+export {BuyButton, SellButton, AddUser, ShowUser, ShowSalary, GetALoan, Influxes, Effluxes}

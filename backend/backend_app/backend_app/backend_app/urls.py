@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from institutions.views import generate_social_security_data,buy, sell, generate_others, get_a_loan, building, create_efflux
+from institutions.views import generate_social_security_data,buy, sell, generate_others, get_a_loan, building, create_efflux, all_effluxes, all_influxes
 from user.views import create_person, get_all_persons
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -28,5 +28,7 @@ urlpatterns = [
     path("efflux/", create_efflux),
     path("buy/<int:id>/<int:value>/<str:buy_type>/", buy),
     path("sell/<int:id>/<int:value>/", sell),
-    path("other/<str:others_type>/<int:building_id>/", generate_others)
+    path("other/<str:others_type>/<int:building_id>/", generate_others),
+    path("influx/", all_influxes),
+    path("efflux/", all_effluxes)
 ]
