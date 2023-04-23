@@ -11,3 +11,19 @@ The project aims to implement a simple model of the **blockchain prevention of m
 - Node
 
 ## Getting started
+Start the database from docker-compose.yml file
+
+'''bash
+docker-compose up
+
+Start the client application
+
+'''bash
+npm start
+
+Migrate data and start the server-side application
+
+'''bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
