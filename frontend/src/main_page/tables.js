@@ -245,7 +245,7 @@ function BuyForm() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: null
+        body: "{}"
       })
       .then(response => {
         console.log("Success");

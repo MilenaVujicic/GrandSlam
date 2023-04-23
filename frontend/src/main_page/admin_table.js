@@ -128,7 +128,7 @@ return (
       {effluxes.map((efflux) => (
         <tr key={efflux.id}>
           <td>{efflux.value}</td>
-          <td>{efflux.type}</td>
+          <td>{efflux.e_type}</td>
           <td>{efflux.time}</td>
           <td>{efflux.size}</td>
           <td>{efflux.person}</td>

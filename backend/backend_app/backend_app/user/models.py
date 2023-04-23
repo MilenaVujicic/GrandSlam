@@ -21,7 +21,7 @@ class Influx(models.Model):
 
 class Efflux(models.Model):
     value = models.BigIntegerField(null=False)
-    type = models.CharField(max_length=255, null=False)
+    e_type = models.CharField(max_length=255, null=False)
     size = models.CharField(max_length=7, choices=EFFLUX_SIZE)
     time = models.DateTimeField(auto_now=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, null=True, blank=True)

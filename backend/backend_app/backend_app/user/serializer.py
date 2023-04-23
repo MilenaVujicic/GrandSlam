@@ -12,7 +12,7 @@ class InfluxSerializer(serializers.ModelSerializer):
 class EffluxSerializer(serializers.ModelSerializer):
     class Meta:
         model = Efflux
-        fields = ('id', 'value', 'type', 'size', 'time', 'person')
+        fields = ('id', 'value', 'e_type', 'size', 'time', 'person')
 
 
 class PersonSerializer(serializers.ModelSerializer):

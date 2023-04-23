@@ -25,10 +25,9 @@ urlpatterns = [
     path("persons/",get_all_persons),
     path("building/<str:type>/", building),
     path("loan/<int:id>/<int:value>/", get_a_loan),
-    path("efflux/", create_efflux),
     path("buy/<int:id>/<int:value>/<str:buy_type>/", buy),
     path("sell/<int:id>/<int:value>/", sell),
     path("other/<str:others_type>/<int:building_id>/", generate_others),
     path("influx/", all_influxes),
-    path("efflux/", all_effluxes)
+    path("efflux/", all_effluxes),
 ]

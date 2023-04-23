@@ -216,7 +216,7 @@ def buy(request, id, value, buy_type):
             size = "large"
         efflux = {
             "value":value,
-            "type":buy_type,
+            "e_type":buy_type,
             "size":size,
             "person":person.id
         }
@@ -239,7 +239,6 @@ def buy(request, id, value, buy_type):
         ct = compileTeal(teal_program, mode=Mode.Application)
      
         serializer = EffluxSerializer(data=efflux)
-        serializer['ct'] = ct
         if serializer.is_valid():
             serializer.save()
             person.save()
