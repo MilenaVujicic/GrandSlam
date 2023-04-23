@@ -1,10 +1,13 @@
 import React from "react";
-import {AddUser, BuyButton, SellButton, ShowUser, ShowSalary} from "./buttons";
+import {AddUser, BuyButton, SellButton, ShowUser, ShowSalary, GetALoan} from "./buttons";
 function MainPage(){
     return(
         <div>
             <h2>Test User</h2>
             <AddUser></AddUser>
+            <br/>
+            <br/>
+            <GetALoan></GetALoan>
             <br/>
             <br/>
             <BuyButton></BuyButton>

@@ -3,26 +3,52 @@ import {Button} from 'react-bootstrap';
 import { useNavigate} from 'react-router-dom';
 
 function BuyButton(){
+    const navigate = useNavigate();
+
+    const handleBuy = () =>{
+        navigate("/buy");
+    }
     return(
-        <Button onClick={buyRequest}>Buy</Button>
+        <Button onClick={handleBuy}>Buy</Button>
     );
 }
 
 function SellButton(){
+    const navigate = useNavigate();
+
+    const handleSell = ()=>{
+        navigate("/sell");
+    }
+
     return(
-        <Button onClick={sellRequest}>Sell</Button>
+        <Button onClick={handleSell}>Sell</Button>
+    )
+}
+
+function GetALoan(){
+    const navigate = useNavigate();
+
+    const handleLoan = () => {
+        navigate('/loan');
+    }
+   
+
+    return(
+        <Button onClick={handleLoan}>Loan</Button>
     )
 }
 
 function ShowUser(){
+    const navigate = useNavigate();
+    const handleShowUser = ()=>{
+        navigate("/showUsers");
+    }
     return(
-        <Button onClick={navigateShowUser}>Show User</Button>
+        <Button onClick={handleShowUser}>Show User</Button>
     )
 }
 
-function navigateShowUser(){
 
-}
 function AddUser(){
     const navigate = useNavigate();
 
@@ -35,13 +61,7 @@ function AddUser(){
 }
 
 
-function buyRequest(){
-    console.log("Bought");
-}
 
-function sellRequest(){
-    console.log("Sold");
-}
 
 function ShowSalary(){
     const navigate = useNavigate();
@@ -55,4 +75,4 @@ function ShowSalary(){
 }
 
 
-export {BuyButton, SellButton, AddUser, ShowUser, ShowSalary}
+export {BuyButton, SellButton, AddUser, ShowUser, ShowSalary, GetALoan}

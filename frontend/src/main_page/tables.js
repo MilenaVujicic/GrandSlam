@@ -57,7 +57,7 @@ function SalaryForm() {
   const handleSubmit = (event) => {
     event.preventDefault();
     let data = JSON.stringify({contract:contractValue , salary:salaryValue});
-    let url = "http://localhost:8000/generate_social_security/" + idValue
+    let url = "http://localhost:8000/generate_social_security/" + idValue + "/"
     fetch(url, {
         method: 'POST',
         headers: {
@@ -117,4 +117,190 @@ function SalaryForm() {
   );
 }
 
-export { UserTable, SalaryForm};
+function LoanForm() {
+  const [idValue, setIdValue] = useState('');
+  const [loanValue, setLoanValue] = useState(0);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let url = "http://localhost:8000/loan/" + idValue + "/" + loanValue + "/";
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: null
+      })
+      .then(response => {
+        console.log("Success");
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log("Something went wrong");
+      });
+
+  }
+
+  const handleIdChange = (event) => {
+    setIdValue(event.target.value);
+  }
+
+  const handleLoanChange = (event) => {
+    setLoanValue(event.target.value);
+  }
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="input">
+        <Form.Label>User ID:</Form.Label>
+        <Form.Control 
+          type="text" 
+          value={idValue} 
+          onChange={handleIdChange} 
+        />
+      </Form.Group>
+      <Form.Group controlId="value">
+        <Form.Label>Loan:</Form.Label>
+        <Form.Control 
+          type="number" 
+          value={loanValue} 
+          onChange={handleLoanChange} 
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+    </Form>
+  );
+}
+
+function SellForm() {
+  const [idValue, setIdValue] = useState('');
+  const [sellValue, setSellValue] = useState(0);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let url = "http://localhost:8000/sell/" + idValue + "/" + sellValue + "/";
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: null
+      })
+      .then(response => {
+        console.log("Success");
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log("Something went wrong");
+      });
+
+  }
+
+  const handleIdChange = (event) => {
+    setIdValue(event.target.value);
+  }
+
+  const handleValueChange = (event) => {
+    setSellValue(event.target.value);
+  }
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="input">
+        <Form.Label>User ID:</Form.Label>
+        <Form.Control 
+          type="text" 
+          value={idValue} 
+          onChange={handleIdChange} 
+        />
+      </Form.Group>
+      <Form.Group controlId="value">
+        <Form.Label>Value:</Form.Label>
+        <Form.Control 
+          type="number" 
+          value={sellValue} 
+          onChange={handleValueChange} 
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Sell
+      </Button>
+    </Form>
+  );
+}
+
+
+function BuyForm() {
+  const [idValue, setIdValue] = useState('');
+  const [buyValue, setBuyValue] = useState(0);
+  const [typeValue, setTypeValue] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let url = "http://localhost:8000/buy/" + idValue + "/" + buyValue + "/" + typeValue + "/";
+    fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: null
+      })
+      .then(response => {
+        console.log("Success");
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log("Something went wrong");
+      });
+
+  }
+
+  const handleIdChange = (event) => {
+    setIdValue(event.target.value);
+  }
+
+  const handleValueChange = (event) => {
+    setBuyValue(event.target.value);
+  }
+
+  const handleTypeChange = (event) =>{
+    setTypeValue(event.target.value);
+  }
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Group controlId="input">
+        <Form.Label>User ID:</Form.Label>
+        <Form.Control 
+          type="text" 
+          value={idValue} 
+          onChange={handleIdChange} 
+        />
+      </Form.Group>
+      <Form.Group controlId="value">
+        <Form.Label>Value:</Form.Label>
+        <Form.Control 
+          type="number" 
+          value={buyValue} 
+          onChange={handleValueChange} 
+        />
+      </Form.Group>
+      <Form.Group controlId="type">
+        <Form.Label>Type:</Form.Label>
+        <Form.Control 
+          type="text" 
+          value={typeValue} 
+          onChange={handleTypeChange} 
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Buy
+      </Button>
+    </Form>
+  );
+}
+
+
+export { UserTable, SalaryForm, LoanForm, SellForm, BuyForm};

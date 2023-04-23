@@ -16,14 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from institutions.views import generate_social_security_data, generate_others, building, create_efflux
+from institutions.views import generate_social_security_data,buy, sell, generate_others, get_a_loan, building, create_efflux
 from user.views import create_person, get_all_persons
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("generate_social_security/<int:id>", generate_social_security_data),
+    path("generate_social_security/<int:id>/", generate_social_security_data),
     path("person/", create_person),
     path("persons/",get_all_persons),
     path("building/<str:type>/", building),
+    path("loan/<int:id>/<int:value>/", get_a_loan),
     path("efflux/", create_efflux),
+    path("buy/<int:id>/<int:value>/<str:buy_type>/", buy),
+    path("sell/<int:id>/<int:value>/", sell),
     path("other/<str:others_type>/<int:building_id>/", generate_others)
 ]

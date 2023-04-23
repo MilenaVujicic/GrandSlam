@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework.parsers import JSONParser
 from .serializer import SocialSecuritySerializer, LandRegistrySerializer, OthersSerializer
 from user.models import Person, Influx
-from user.serializer import InfluxSerializer, EffluxSerializer
+from user.serializer import InfluxSerializer, EffluxSerializer, PersonSerializer
 from .models import SocialSecurity, Others, LandRegistry
 from django.views.decorators.csrf import csrf_exempt
 from random import randint
@@ -13,10 +13,7 @@ from random import randint
 @csrf_exempt
 def generate_social_security_data(request, id):
     person = Person.objects.get(id_number=int(id))
-    if request.method == "POST":
-        all_contracts = SocialSecurity.objects.all()
-        if len(all_contracts) != 0:
-            return HttpResponse(status=400)
+    if request.method == "POST":    
 
         data = JSONParser().parse(request)
         value = int(data['salary'])
@@ -49,6 +46,35 @@ def generate_social_security_data(request, id):
 
     return HttpResponse(status=200)
 
+@csrf_exempt
+def get_a_loan(request, id, value):
+    person = Person.objects.get(id_number=id)
+    if request.method == "POST":
+        other = {
+            "others_name": "Loan",
+            "others_value": value,
+            "person": person.id
+        }
+
+        influx = {
+            "value": value,
+            "type": "others",
+            "person": person.id
+        }
+        serializer = OthersSerializer(data=other)
+        person.balance += value
+
+        if serializer.is_valid():
+            serializer.save()
+            person.save()
+            influx_serializer = InfluxSerializer(data=influx)
+            if influx_serializer.is_valid():
+                influx_serializer.save()
+            else:
+                return JsonResponse(influx_serializer.errors, status=400)
+
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
 def generate_others(request, others_type, building_id):
@@ -135,6 +161,49 @@ def building(request, type):
             return JsonResponse(serializer.data, status=200)
 
     return JsonResponse(content=None, status=400)
+
+@csrf_exempt
+def sell(request, id, value):
+    person = Person.objects.get(id_number=id)
+    if request.method == "POST":
+        person.balance += int(value)
+        influx = {
+            "value": value,
+            "type": "others",
+            "person": person.id
+
+        }
+        serializer = InfluxSerializer(data=influx)
+        if serializer.is_valid():
+            serializer.save()
+            person.save()
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def buy(request, id, value, buy_type):
+    person = Person.objects.get(id_number=id)
+    if request.method == "POST":
+        person.balance-=int(value)
+        size = "small"
+        if int(value) > 30000:
+            size = "medium"
+
+        if int(value) > 300000:
+            size = "large"
+        efflux = {
+            "value":value,
+            "type":buy_type,
+            "size":size,
+            "person":person.id
+        }
+
+        serializer = EffluxSerializer(data=efflux)
+        if serializer.is_valid():
+            serializer.save()
+            person.save()
+            return JsonResponse(serializer.data, status=200)
+        return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
 def create_efflux(request):

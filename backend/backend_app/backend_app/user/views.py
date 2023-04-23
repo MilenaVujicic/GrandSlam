@@ -22,7 +22,7 @@ def create_person(request):
 def get_all_persons(request):
     if request.method == "GET":
         persons = Person.objects.all()
-        serializer = PersonSerializer(data=persons, many=True)
+        serializer = PersonSerializer(persons, many=True)
         return JsonResponse(serializer.data, safe=False, status=200)
     
     return HttpResponse(status=400)
