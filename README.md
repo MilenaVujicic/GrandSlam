@@ -13,17 +13,20 @@ The project aims to implement a simple model of the **blockchain prevention of m
 ## Getting started
 Start the database from docker-compose.yml file
 
-'''bash
+```bash
 docker-compose up
+```
 
 Start the client application
 
-'''bash
+```bash
 npm start
+```
 
 Migrate data and start the server-side application
 
-'''bash
+```bash
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
+```
