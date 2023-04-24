@@ -33,7 +33,7 @@ function Influxes(){
     }
 
     return(
-        <Button onClick={handleInflux}>Influxes</Button>
+        <Button onClick={handleInflux}>Incomes</Button>
     )
 }
 
@@ -45,7 +45,7 @@ function Effluxes(){
     }
 
     return(
-        <Button onClick={handleEfflux}>Effluxes</Button>
+        <Button onClick={handleEfflux}>Expenses</Button>
     )
 
 }

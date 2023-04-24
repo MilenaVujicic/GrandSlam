@@ -50,7 +50,7 @@ const DataTable = ({ data }) => {
             <td>{user.balance}</td>
             <td>{user.status}</td>
             <td>
-              <Button onClick={() => console.log(`Button clicked for row ${user.id}`)}>
+              <Button onClick={() => console.log("User blacklisted")}>
                 Blacklist
               </Button>
             </td>
