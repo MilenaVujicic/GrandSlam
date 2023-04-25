@@ -66,7 +66,7 @@ function SalaryForm() {
         body: data
       })
       .then(response => {
-        window.localtion.reload();
+        window.location.reload();
       })
       .catch(error => {
         console.log("Something went wrong");

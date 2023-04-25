@@ -276,3 +276,4 @@ def all_effluxes(request):
         effluxes = Efflux.objects.all()
         serializer = EffluxSerializer(effluxes, many=True)
         return JsonResponse(serializer.data, safe=False, status=200)
+   

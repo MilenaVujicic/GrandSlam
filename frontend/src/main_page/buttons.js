@@ -69,7 +69,7 @@ function ShowUser(){
         navigate("/showUsers");
     }
     return(
-        <Button onClick={handleShowUser}>Show User</Button>
+        <Button onClick={handleShowUser}>Show Users</Button>
     )
 }
 
